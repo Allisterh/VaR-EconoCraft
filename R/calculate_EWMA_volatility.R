@@ -15,10 +15,10 @@
 #' portfolio_returns <- c(-0.02, 0.01, -0.03, 0.04, -0.01)
 #' 
 #' # Calculate EWMA volatility with default lambda
-#' var_ewma <- calculate_EWMA_volatility(portfolio_returns)
+#' vol_ewma <- calculate_EWMA_volatility(portfolio_returns)
 #' 
 #' # Calculate EWMA volatility with custom lambda
-#' var_ewma_custom_lambda <- calculate_EWMA_volatility(portfolio_returns, lambda = 0.90)
+#' vol_ewma_custom_lambda <- calculate_EWMA_volatility(portfolio_returns, lambda = 0.90)
 #' }
 #'
 
@@ -33,18 +33,18 @@ calculate_EWMA_volatility <- function(portfolio_returns, lambda = 0.94) {
     stop("lambda should be a numeric value between 0 and 1.")
   }
   
-  # Initialize the var_ewma vector
-  var_ewma = rep(0, length(portfolio_returns))
+  # Initialize the vol_ewma vector
+  vol_ewma = rep(0, length(portfolio_returns))
   
   # Loop through portfolio_returns
   for (i in seq_along(portfolio_returns)) {
     if (i == 1) {
-      var_ewma[i] <- var(portfolio_returns)
+      vol_ewma[i] <- var(portfolio_returns)
     } else {
-      var_ewma[i] <- lambda * var_ewma[i-1] + (1 - lambda) * portfolio_returns[i-1]^2
+      vol_ewma[i] <- lambda * vol_ewma[i-1] + (1 - lambda) * portfolio_returns[i-1]^2
     }
   }
   
-  # Return the var_ewma vector
-  return(var_ewma)
+  # Return the vol_ewma vector
+  return(vol_ewma)
 }
