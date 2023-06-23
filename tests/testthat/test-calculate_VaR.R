@@ -28,6 +28,21 @@ test_that("calculate_VaR calls calculate_VaR_t_student for method='t-student'", 
   expect_equal(t_student_result$ES, direct_result$ES)
 })
 
+test_that("calculate_VaR calls calculate_VaR_EWMA for method='ewma'", {
+  set.seed(2137)
+  returns <- rnorm(100, 0.05, 0.01)
+  alpha <- 0.05
+  result <- calculate_VaR(returns, alpha, method = "ewma", distribution = "gaussian")
+  direct_result <- calculate_VaR_EWMA(returns, alpha, distribution = "gaussian")
+  expect_equal(result$VaR, direct_result$VaR)
+  expect_equal(result$ES, direct_result$ES)
+  
+  result <- calculate_VaR(returns, alpha, method = "ewma", distribution = "t-student")
+  direct_result <- calculate_VaR_EWMA(returns, alpha, distribution = "t-student")
+  expect_equal(result$VaR, direct_result$VaR)
+  expect_equal(result$ES, direct_result$ES)
+})
+
 test_that("calculate_VaR gives an error for an invalid method", {
   set.seed(2137)
   returns <- rnorm(100, 0.05, 0.01)
