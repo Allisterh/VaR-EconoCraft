@@ -18,7 +18,7 @@
 #'
 #' @examples
 #' # To calculate the VaR at 5 different horizons assuming zero mean and unit standard deviation returns:
-#' scale_VaR_monte_carlo(H = 5, N = 1e4, alpha = 0.05, method = 'gaussian', params = list('mean' = 0, 'sd' = 1))
+#' scale_VaR_monte_carlo(H = 5, N = 1e4, alpha = 0.05, method = 'gaussian', params = list(mean = 0, sd = 1))
 
 
 scale_VaR_monte_carlo = function(H = 5, N = 1e4, alpha = 0.05, method, params = NULL) {
