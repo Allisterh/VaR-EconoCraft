@@ -4,7 +4,6 @@
 #' given a fitted GARCH model. It also calculates the number of times the portfolio's actual returns fall 
 #' below the calculated VaR.
 #'
-#' @param portfolio_returns A numeric vector representing the portfolio's returns.
 #' @param fit A fitted GARCH model of class 'uGARCHfit'. This can be obtained by using the 'ugarchfit' function from 'rugarch' package.
 #' from the 'rugarch' package on your return data.
 #' @param alpha A numeric value between 0 and 1 representing the significance level for the VaR and ES. Default is 0.05.
@@ -23,7 +22,7 @@
 #' calculate_VaR_GARCH(x, fit)
 #' }
 
-calculate_VaR_GARCH = function(portfolio_returns, fit, alpha = 0.05){
+calculate_VaR_GARCH = function(fit, alpha = 0.05){
   # Validate inputs
   if (!is.numeric(alpha) || alpha < 0 || alpha > 1) {
     stop("alpha should be a numeric value between 0 and 1.")
@@ -33,6 +32,7 @@ calculate_VaR_GARCH = function(portfolio_returns, fit, alpha = 0.05){
     stop("fit should fitted model of class uGARCHfit")
   }
   
+  portfolio_returns = fit@model$modeldata$data
   volatility = as.numeric(sigma(fit))
   
   VaR = qnorm(alpha) * tail(volatility, 1)
